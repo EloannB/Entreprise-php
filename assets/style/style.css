@@ -1,0 +1,22 @@
+#home {
+    padding-left: 240px;
+}
+
+.user-info {
+    margin-top: 20px;
+}
+
+.add-profil,
+.logout-button {
+    margin-top: 20px;
+}
+
+.sidenav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 240px;
+    z-index: 999;
+    padding-top: 64px;
+}
