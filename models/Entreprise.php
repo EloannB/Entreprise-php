@@ -37,7 +37,7 @@ class Entreprise
             $query->bindValue(':mail_entreprise', htmlspecialchars($courriel), PDO::PARAM_STR);
             $query->bindValue(':mdp_entreprise', password_hash($mot_de_passe, PASSWORD_DEFAULT), PDO::PARAM_STR);
             $query->bindValue(':siret_entreprise', $siret, PDO::PARAM_INT);
-            $query->bindValue(':adresse_entreprise', htmlspecialchars($adresse), PDO::PARAM_STR);            
+            $query->bindValue(':adresse_entreprise', htmlspecialchars($adresse), PDO::PARAM_STR);
             $query->bindValue(':postal_entreprise', $postal, PDO::PARAM_INT);
             $query->bindValue(':ville_entreprise', htmlspecialchars($ville), PDO::PARAM_STR);
 
@@ -240,8 +240,8 @@ class Entreprise
             $sql = "SELECT COUNT(*) AS Total FROM `utilisateur` WHERE `id_entreprise` = :id_entreprise";
 
             // je prepare ma requête pour éviter les injections SQL
-            $query = $db->prepare($sql); 
-            
+            $query = $db->prepare($sql);
+
             $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
 
             // on execute la requête
@@ -277,8 +277,8 @@ class Entreprise
             ";
 
             // je prepare ma requête pour éviter les injections SQL
-            $query = $db->prepare($sql); 
-            
+            $query = $db->prepare($sql);
+
             $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
 
             // on execute la requête
@@ -314,8 +314,41 @@ class Entreprise
             ";
 
             // je prepare ma requête pour éviter les injections SQL
-            $query = $db->prepare($sql); 
-            
+            $query = $db->prepare($sql);
+
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // on retourne le résultat
+            return $result;
+        } catch (PDOException $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
+
+    /**
+     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * 
+     * @return array Tableau associatif contenant les infos des utilisateurs
+     */
+    public static function getFiveLastUtilisateur(int $id_entreprise): array
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT id_utilisateur, photo_participant, pseudo_participant FROM `utilisateur` WHERE id_entreprise = :id_entreprise ORDER BY id_utilisateur DESC LIMIT 5;";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql);
+
             $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
 
             // on execute la requête

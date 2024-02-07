@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav class="top-nav">
+    <nav class="top-nav #64b5f6 blue lighten-2">
         <div class="container">
             <div class="nav-wrapper">
                 <div class="row">
@@ -127,14 +127,28 @@
                     <div class="card blue-grey darken-1">
                         <div class="card-content white-text">
                             <span class="card-title">Les 5 derniers utilisateurs :</span>
-                            <p>Affichez ici les informations sur les 5 derniers utilisateurs.</p>
+                            <?php
+                            // Appeler la fonction pour récupérer les utilisateurs
+                            $fiveUtilisateur = Entreprise::getFiveLastUtilisateur($_SESSION['user']['id_entreprise']);
+
+                            // Vérifier si des utilisateurs ont été récupérés
+                            if (!empty($fiveUtilisateur)) {
+                                // Afficher les utilisateurs
+                                foreach ($fiveUtilisateur as $utilisateur) {
+                                    echo "<img src='http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}' alt='photo_participant' style='max-width: 30%'>";
+                                    echo "<p>{$utilisateur['pseudo_participant']}</p>";
+                                }
+                            } else {
+                                echo "<p>Aucun utilisateur trouvé.</p>";
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
                 <div class="col s12 m6">
                     <div class="card blue-grey darken-1">
                         <div class="card-content white-text">
-                            <span class="card-title">Stats hebdomadaire :</span>
+                            <span class="card-title">Les 5 derniers trajets :</span>
                             <p>Affichez ici les stats</p>
                         </div>
                     </div>
