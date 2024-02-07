@@ -224,4 +224,111 @@ class Entreprise
             die();
         }
     }
+
+    /**
+     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * 
+     * @return array Tableau associatif contenant les infos des utilisateurs
+     */
+    public static function getAllUtilisateur(int $id_entreprise): array
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT COUNT(*) AS Total FROM `utilisateur` WHERE `id_entreprise` = :id_entreprise";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql); 
+            
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // on retourne le résultat
+            return $result;
+        } catch (PDOException $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
+
+    /**
+     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * 
+     * @return array Tableau associatif contenant les infos des utilisateurs
+     */
+    public static function getAllActif(int $id_entreprise): array
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT COUNT(DISTINCT utilisateur.id_utilisateur) AS TotalActif
+            FROM `utilisateur`
+            JOIN `trajet` ON utilisateur.id_utilisateur = trajet.id_utilisateur
+            WHERE utilisateur.id_entreprise = :id_entreprise
+            ";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql); 
+            
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // on retourne le résultat
+            return $result;
+        } catch (PDOException $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
+
+    /**
+     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * 
+     * @return array Tableau associatif contenant les infos des utilisateurs
+     */
+    public static function getAllTrajet(int $id_entreprise): array
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT COUNT(*) AS TotalTrajet
+            FROM `trajet`
+            JOIN `utilisateur` ON utilisateur.id_utilisateur = trajet.id_utilisateur
+            WHERE utilisateur.id_entreprise = :id_entreprise;
+            ";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql); 
+            
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // on retourne le résultat
+            return $result;
+        } catch (PDOException $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
 }

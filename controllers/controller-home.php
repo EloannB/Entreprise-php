@@ -6,7 +6,6 @@ require_once '../models/Entreprise.php';
 require_once "../models/Trajet.php";
 
 
-
 // Vérifier si le formulaire de déconnexion a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     // Détruire toutes les variables de session
