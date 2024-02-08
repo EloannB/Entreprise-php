@@ -31,3 +31,10 @@ padding-left: 0;
 .top-nav {
 height: 100%;
 }
+
+.center-align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+  }

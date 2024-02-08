@@ -4,33 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
     <link rel="stylesheet" href="../assets/style/style.css">
     <title>Formulaire connexion</title>
 </head>
 
 <body>
-    <div id="formulaire" style="margin: 115px auto;">
+    <div id="formulaire" class="container" style="margin-top: 115px;">
         <form action="../controllers/controller-signin.php" method="post" novalidate>
-            <h1>Veuillez vous connecter</h1>
-            <div class="mb-3">
-                <label for="form2Example1" class="form-label">Saisir votre adresse mail</label>
-                <input type="email" id="courriel" name="courriel" placeholder="Courriel" value="<?= htmlspecialchars($_POST['courriel'] ?? '') ?>" required>
-                <p class="error"><?= $erreurs["courriel"] ?? '' ?></p>
+            <h1 class="center-align">Veuillez vous connecter</h1>
+            <div class="input-field">
+                <input id="courriel" type="email" class="validate" name="courriel" value="<?= htmlspecialchars($_POST['courriel'] ?? '') ?>" required>
+                <label for="courriel">Saisir votre adresse mail</label>
+                <span class="helper-text" data-error="<?= $erreurs["courriel"] ?? '' ?>"></span>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Saisir votre mot de passe</label>
-                <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder="Mot de passe" required>
-                <p class="error"><?= $erreurs["mot_de_passe"] ?? '' ?></p>
+            <div class="input-field">
+                <input id="mot_de_passe" type="password" class="validate" name="mot_de_passe" required>
+                <label for="mot_de_passe">Saisir votre mot de passe</label>
+                <span class="helper-text" data-error="<?= $erreurs["mot_de_passe"] ?? '' ?>"></span>
             </div>
-            <div class="text-center" style="padding-bottom: 20px">
-                <a href="">Mot de passe oublié</a>
+            <div class="row center-align" style="padding-bottom: 20px;">
+                <a href="#">Mot de passe oublié</a>
             </div>
-            <button type="submit">Connexion</button>
-            <div class="text-center">
-                <p>Pas encore inscris ? <a href="../controllers/controller-signup.php">Inscrivez-vous</a></p>
+            <div class="row center-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Connexion
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+            <div class="row center-align">
+                <p>Pas encore inscrit ? <a href="../controllers/controller-signup.php">Inscrivez-vous</a></p>
             </div>
         </form>
     </div>
+    <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
 </body>
 
 </html>

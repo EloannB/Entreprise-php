@@ -48,7 +48,9 @@
             <!-- Ajouter le formulaire de déconnexion -->
             <form method="post" style="display:inline;">
                 <input type="hidden" name="logout" value="1">
-                <button type="submit" class="logout-button">Déconnexion</button>
+                <div class="center-align">
+                    <button type="submit" class="btn logout-button">Déconnexion</button>
+                </div>
             </form>
         </ul>
     </div>
