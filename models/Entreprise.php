@@ -364,4 +364,43 @@ class Entreprise
             die();
         }
     }
+
+    /**
+     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * 
+     * @return array Tableau associatif contenant les infos des utilisateurs
+     */
+    public static function getFiveLastTrajet(int $id_entreprise): array
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT trajet.date_trajet, utilisateur.pseudo_participant, transport.type_transport, trajet.distance_trajet, trajet.temps_trajet
+            FROM trajet
+            JOIN utilisateur ON trajet.id_utilisateur = utilisateur.id_utilisateur
+            JOIN transport ON trajet.id_transport = transport.id_transport
+            WHERE utilisateur.id_entreprise = :id_entreprise
+            ORDER BY trajet.date_trajet DESC
+            LIMIT 5;";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql);
+
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // on retourne le résultat
+            return $result;
+        } catch (PDOException $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
 }

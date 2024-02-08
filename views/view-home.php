@@ -135,8 +135,10 @@
                             if (!empty($fiveUtilisateur)) {
                                 // Afficher les utilisateurs
                                 foreach ($fiveUtilisateur as $utilisateur) {
-                                    echo "<img src='http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}' alt='photo_participant' style='max-width: 30%'>";
-                                    echo "<p>{$utilisateur['pseudo_participant']}</p>";
+                                    echo "<div style='display: flex; align-items: center;'>";
+                                    echo "<img src='http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}' alt='photo_participant' style='max-width: 30%; border-radius: 50%; margin-top: 10px; height: 80px; width: 80px; object-fit: cover;'>";
+                                    echo "<p style='margin-left: 10px;'>{$utilisateur['pseudo_participant']}</p>";
+                                    echo "</div>";
                                 }
                             } else {
                                 echo "<p>Aucun utilisateur trouvé.</p>";
@@ -149,7 +151,26 @@
                     <div class="card blue-grey darken-1">
                         <div class="card-content white-text">
                             <span class="card-title">Les 5 derniers trajets :</span>
-                            <p>Affichez ici les stats</p>
+                            <?php
+                            // Appeler la fonction pour récupérer les trajets
+                            $fiveTrajets = Entreprise::getFiveLastTrajet($_SESSION['user']['id_entreprise']);
+
+                            // Vérifier si des trajets ont été récupérés
+                            if (!empty($fiveTrajets)) {
+                                // Afficher les trajets
+                                foreach ($fiveTrajets as $trajet) {
+                                    echo "<p><strong>Date :</strong> {$trajet['date_trajet']}</p>";
+                                    echo "<p><strong>Pseudo :</strong> {$trajet['pseudo_participant']}</p>";
+                                    echo "<p><strong>Type :</strong> {$trajet['type_transport']}</p>";
+                                    echo "<p><strong>Distance :</strong> {$trajet['distance_trajet']} km</p>";
+                                    echo "<p><strong>Temps :</strong> {$trajet['temps_trajet']}</p>";
+                                    echo "<hr>";
+                                }
+                            } else {
+                                echo "<p>Aucun trajet trouvé.</p>";
+                            }
+                            ?>
+
                         </div>
                     </div>
                 </div>
