@@ -45,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($siret)) {
         $erreurs["siret"] = "Siret obligatoire";
+    } else if (!is_numeric($siret)) {
+        $erreurs["siret"] = 'Le numéro de siret ne doit contenir que des chiffres.';
     } else if (strlen($siret) != 14) {
         $erreurs["siret"] = "Le siret est invalide. Il doit contenir 14 caractères.";
     } else if (Entreprise::checkSiretExists($_POST["siret"])) {
         $erreurs["siret"] = 'Siret déja utilisé';
-    } else if (!is_numeric($siret)) {
-        $erreurs["siret"] = 'Le numéro de siret ne doit contenir que des chiffres.';
     }
 
     if (empty($adresse)) {
