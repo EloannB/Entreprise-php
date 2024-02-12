@@ -18,36 +18,36 @@
             <form action="controller-signup.php" method="post" novalidate>
                 <h1 class="center-align">Formulaire d'inscription</h1>
                 <div class="input-field">
-                    <input type="text" id="nom" name="nom" class="validate" placeholder="Nom" value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" required>
-                    <span class="helper-text" data-error="<?= $erreurs["nom"] ?? '' ?>"></span>
+                    <input type="text" id="nom" name="nom" class="validate" placeholder="Nom" value="<?= ($_POST['nom'] ?? '') ?>" required>
+                    <span class="error"><?= $erreurs["nom"] ?? '' ?></span>
                 </div>
                 <div class="input-field">
-                    <input type="email" id="courriel" name="courriel" class="validate" placeholder="Courriel" value="<?= htmlspecialchars($_POST['courriel'] ?? '') ?>" required>
-                    <span class="helper-text" data-error="<?= $erreurs["courriel"] ?? '' ?>"></span>
+                    <input type="email" id="courriel" name="courriel" class="validate" placeholder="Courriel" value="<?= ($_POST['courriel'] ?? '') ?>" required>
+                    <span class="error"><?= $erreurs["courriel"] ?? '' ?></span>
                 </div>
                 <div class="input-field">
                     <input type="password" id="mot_de_passe" name="mot_de_passe" class="validate" placeholder="Mot de passe" required>
-                    <span class="helper-text" data-error="<?= $erreurs["mot_de_passe"] ?? '' ?>"></span>
+                    <span class="error"><?= $erreurs["mot_de_passe"] ?? '' ?></span>
                 </div>
                 <div class="input-field">
                     <input type="password" id="conf_mot_de_passe" name="conf_mot_de_passe" class="validate" placeholder="Confirmer le mot de passe" required>
-                    <span class="helper-text" data-error="<?= $erreurs["conf_mot_de_passe"] ?? '' ?>"></span>
+                    <span class="error"><?= $erreurs["conf_mot_de_passe"] ?? '' ?></span>
                 </div>
                 <div class="input-field">
-                    <input type="text" id="siret" name="siret" class="validate" placeholder="Siret" value="<?= htmlspecialchars($_POST['siret'] ?? '') ?>" required>
-                    <span class="helper-text" data-error="<?= $erreurs["siret"] ?? '' ?>"></span>
+                    <input type="number" id="siret" name="siret" class="validate" placeholder="Siret" value="<?= ($_POST['siret'] ?? '') ?>" required>
+                    <span class="error"><?= $erreurs["siret"] ?? '' ?></span>
                 </div>
                 <div class="input-field">
-                    <input type="text" id="adresse" name="adresse" class="validate" placeholder="Adresse" value="<?= htmlspecialchars($_POST['adresse'] ?? '') ?>" required>
-                    <span class="helper-text" data-error="<?= $erreurs["adresse"] ?? '' ?>"></span>
+                    <input type="text" id="adresse" name="adresse" class="validate" placeholder="Adresse" value="<?= ($_POST['adresse'] ?? '') ?>" required>
+                    <span class="error"><?= $erreurs["adresse"] ?? '' ?></span>
                 </div>
                 <div class="input-field">
-                    <input type="text" id="postal" name="postal" class="validate" placeholder="Adresse postal" value="<?= htmlspecialchars($_POST['postal'] ?? '') ?>" required>
-                    <span class="helper-text" data-error="<?= $erreurs["postal"] ?? '' ?>"></span>
+                    <input type="text" id="postal" name="postal" class="validate" placeholder="Adresse postal" value="<?= ($_POST['postal'] ?? '') ?>" required>
+                    <span class="error"><?= $erreurs["postal"] ?? '' ?></span>
                 </div>
                 <div class="input-field">
-                    <input type="text" id="ville" name="ville" class="validate" placeholder="Ville" value="<?= htmlspecialchars($_POST['ville'] ?? '') ?>" required>
-                    <span class="helper-text" data-error="<?= $erreurs["ville"] ?? '' ?>"></span>
+                    <input type="text" id="ville" name="ville" class="validate" placeholder="Ville" value="<?= ($_POST['ville'] ?? '') ?>" required>
+                    <span class="error"><?= $erreurs["ville"] ?? '' ?></span>
                 </div>
                 <label>
                     <input type="checkbox" name="cgu" <?= isset($_POST['cgu']) ? 'checked' : '' ?> class="filled-in" required>

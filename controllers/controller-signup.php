@@ -49,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreurs["siret"] = "Le siret est invalide. Il doit contenir 14 caractères.";
     } else if (Entreprise::checkSiretExists($_POST["siret"])) {
         $erreurs["siret"] = 'Siret déja utilisé';
+    } else if (!is_numeric($siret)) {
+        $erreurs["siret"] = 'Le numéro de siret ne doit contenir que des chiffres.';
     }
 
     if (empty($adresse)) {

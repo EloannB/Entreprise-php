@@ -38,3 +38,11 @@ height: 100%;
     align-items: center;
     height: 10vh;
   }
+
+  span.error {
+    color: red;
+  }
+
+  p.error {
+    color: red;
+  }
