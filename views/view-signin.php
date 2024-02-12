@@ -17,12 +17,12 @@
             <div class="input-field">
                 <input id="courriel" type="email" class="validate" name="courriel" value="<?= htmlspecialchars($_POST['courriel'] ?? '') ?>" required>
                 <label for="courriel">Saisir votre adresse mail</label>
-                <span class="helper-text" data-error="<?= $erreurs["courriel"] ?? '' ?>"></span>
+                <span class="error"><?= $erreurs["courriel"] ?? '' ?></span>
             </div>
             <div class="input-field">
                 <input id="mot_de_passe" type="password" class="validate" name="mot_de_passe" required>
                 <label for="mot_de_passe">Saisir votre mot de passe</label>
-                <span class="helper-text" data-error="<?= $erreurs["mot_de_passe"] ?? '' ?>"></span>
+                <span class="error"><?= $erreurs["mot_de_passe"] ?? '' ?></span>
             </div>
             <div class="row center-align" style="padding-bottom: 20px;">
                 <a href="#">Mot de passe oublié</a>
