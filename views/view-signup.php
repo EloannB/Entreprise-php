@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
     <link rel="stylesheet" href="../assets/style/style.css">
     <title>Inscription</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -54,6 +55,10 @@
                     <span>J'accepte les conditions générales d'utilisation (CGU)</span>
                 </label>
                 <p class="error"><?= $erreurs["cgu"] ?? '' ?></p>
+
+                <div class="g-recaptcha" data-sitekey="6LfN-3ApAAAAAArKSULR0ZZUugnhUy0Jck-_kujA"></div>
+                <span class="error"><?= $erreurs["g-recaptcha-response"] ?? '' ?></span>
+
                 <div class="center-align">
                     <button class="btn waves-effect waves-light" type="submit" name="action">S'enregistrer
                         <i class="material-icons right">send</i>
@@ -70,11 +75,12 @@
             <div class='user-summary' style='border: 1px solid #ccc; padding: 20px; max-width: 400px;'>
                 <p style='color:green;'>Inscription réussie ! Un mail de confirmation a été envoyé.</p>
                 <div style='padding: 20px;'>
-                    <a href='../views/view-signin.php' class='btn waves-effect waves-light'>Connexion</a>
+                    <a href='../controllers/controller-signin.php' class='btn waves-effect waves-light'>Connexion</a>
                 </div>
             </div>
         </div>
     <?php } ?>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
 </body>
 

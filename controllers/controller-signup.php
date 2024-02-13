@@ -70,6 +70,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else if (!ctype_alpha($ville)) {
         $erreurs["ville"] = "Le ville est invalide.";
     };
+
+    $recaptcha_secret = '6LfN-3ApAAAAAPOGIU3RQ6Bzg4VMIRY4VKzpU_mz';
+
+    // Vérifier si le reCAPTCHA a été soumis
+    if(isset($_POST['g-recaptcha-response'])){
+        // Récupérer la réponse du reCAPTCHA
+        $captcha_response = $_POST['g-recaptcha-response'];
+        // Effectuer une requête POST à l'API de validation reCAPTCHA
+        $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptcha_secret&response=$captcha_response");
+        $responseKeys = json_decode($response, true);
+        // Vérifier si la réponse est valide
+        if(intval($responseKeys["success"]) !== 1) {
+            // Le reCAPTCHA n'a pas été validé
+            $erreurs["g-recaptcha-response"] = "Veuillez valider le reCAPTCHA avant de soumettre le formulaire.";
+        }
+    }
+    
     // Si il n'y a pas d'erreurs
     if (empty($erreurs)) {
 
@@ -95,5 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $showform = false;
     }
 }
+
 
 include_once '../views/view-signup.php';
