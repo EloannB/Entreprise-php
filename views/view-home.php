@@ -163,14 +163,17 @@
                             if (!empty($fiveUtilisateur)) {
                                 // Afficher les utilisateurs
                                 foreach ($fiveUtilisateur as $utilisateur) {
-                                    echo "<div style='display: flex; align-items: center;'>";
-                                    echo "<img src='http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}' alt='photo_participant' style='max-width: 30%; border-radius: 50%; margin-top: 10px; height: 80px; width: 80px; object-fit: cover;'>";
-                                    echo "<p style='margin-left: 10px;'>{$utilisateur['pseudo_participant']}</p>";
+                                    echo "<div style='display: flex; align-items: center;'>";                                                               
+                                    // Condition pour afficher la photo de l'utilisateur actuel ou une image par défaut
+                                    $utilisateurPhotoPath = !empty($utilisateur['photo_participant']) ? "http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}" : "../imageDefaut.png";
+                                    echo "<img src='$utilisateurPhotoPath' alt='photo_participant' style='max-width: 30%; border-radius: 50%; margin-top: 10px; height: 80px; width: 80px; object-fit: cover;'>";
+                                    echo "<p style='margin-left: 10px;'>{$utilisateur['pseudo_participant']}</p>";                           
                                     echo "</div>";
                                 }
                             } else {
                                 echo "<p>Aucun utilisateur trouvé.</p>";
                             }
+                            
                             ?>
                         </div>
                     </div>
