@@ -55,10 +55,6 @@
                     <span>J'accepte les conditions générales d'utilisation (CGU)</span>
                 </label>
                 <p class="error"><?= $erreurs["cgu"] ?? '' ?></p>
-
-                <div class="g-recaptcha" data-sitekey="6LfN-3ApAAAAAArKSULR0ZZUugnhUy0Jck-_kujA"></div>
-                <span class="error"><?= $erreurs["g-recaptcha-response"] ?? '' ?></span>
-
                 <div class="center-align">
                     <button class="btn waves-effect waves-light" type="submit" name="action">S'enregistrer
                         <i class="material-icons right">send</i>
@@ -80,7 +76,6 @@
             </div>
         </div>
     <?php } ?>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
 </body>
 

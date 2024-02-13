@@ -24,9 +24,11 @@
                 <label for="mot_de_passe">Saisir votre mot de passe</label>
                 <span class="error"><?= $erreurs["mot_de_passe"] ?? '' ?></span>
             </div>
-            <div class="row center-align" style="padding-bottom: 20px;">
+            <div class="row center-align">
                 <a href="#">Mot de passe oublié</a>
             </div>
+            <div class="g-recaptcha" data-sitekey="6LfN-3ApAAAAAArKSULR0ZZUugnhUy0Jck-_kujA" style="justify-content: center; align-items: center; display: flex;"></div>
+                <span class="error" style="display: flex; justify-content: center; margin-top: 10px;"><?= $erreurs["g-recaptcha-response"] ?? '' ?></span>
             <div class="row center-align">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Connexion
                     <i class="material-icons right">send</i>
@@ -37,6 +39,7 @@
             </div>
         </form>
     </div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
 </body>
 
