@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
     <link rel="stylesheet" href="../assets/style/style.css">
     <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -163,22 +164,30 @@
                             if (!empty($fiveUtilisateur)) {
                                 // Afficher les utilisateurs
                                 foreach ($fiveUtilisateur as $utilisateur) {
-                                    echo "<div style='display: flex; align-items: center;'>";                                                               
+                                    echo "<div style='display: flex; align-items: center;'>";
                                     // Condition pour afficher la photo de l'utilisateur actuel ou une image par défaut
                                     $utilisateurPhotoPath = !empty($utilisateur['photo_participant']) ? "http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}" : "../imageDefaut.png";
                                     echo "<img src='$utilisateurPhotoPath' alt='photo_participant' style='max-width: 30%; border-radius: 50%; margin-top: 10px; height: 80px; width: 80px; object-fit: cover;'>";
-                                    echo "<p style='margin-left: 10px;'>{$utilisateur['pseudo_participant']}</p>";                           
+                                    echo "<p style='margin-left: 10px;'>{$utilisateur['pseudo_participant']}</p>";
                                     echo "</div>";
                                 }
                             } else {
                                 echo "<p>Aucun utilisateur trouvé.</p>";
                             }
-                            
+
                             ?>
                         </div>
                     </div>
                 </div>
-                
+                <div class="col s12 m6">
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Stats moyens de transports</span>
+                            <canvas id="doughnutChart" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -186,6 +195,58 @@
 
     <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
     <script>
+        // Récupérer les données PHP dans une variable JavaScript
+        var transportStats = <?php echo json_encode($statstransports); ?>;
+
+        // Initialiser les tableaux pour les étiquettes, les données et les couleurs
+        var labels = [];
+        var data = [];
+        var backgroundColors = [];
+        var borderColors = [];
+
+        // Générer des couleurs aléatoires
+        function generateRandomColor() {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            return 'rgba(' + r + ',' + g + ',' + b + ')';
+        }
+
+        // Itérer à travers les données de transport
+        transportStats.forEach(function(stat) {
+            labels.push(stat.type_transport);
+            data.push(stat.stats);
+            var randomColor = generateRandomColor();
+            backgroundColors.push(randomColor);
+            borderColors.push(randomColor.replace('0.2', '1')); // Utilisez une opacité plus élevée pour la bordure
+        });
+
+        // Générer le graphique Doughnut
+        var ctx = document.getElementById('doughnutChart').getContext('2d');
+        var doughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Nombre de trajets',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white' // Changer la couleur de la légende
+                    }
+                }
+            }
+        }
+
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems);

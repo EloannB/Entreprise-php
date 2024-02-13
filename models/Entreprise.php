@@ -403,4 +403,42 @@ class Entreprise
             die();
         }
     }
+
+    /**
+     
+     *Méthode pour récupérer les statistiques des moyens de transport pour une entreprise donnée
+     *@param int $id_entreprise L'identifiant de l'entreprise pour laquelle récupérer les statistiques
+     *@return array Un tableau associatif contenant les statistiques des moyens de transport
+     *Le tableau contient des paires de clés-valeurs où la clé est le type de transport et la valeur est le nombre d'occurrences de ce type de transport
+     */
+    public static function getTransportStats(int $id_entreprise): array
+    {
+        try {
+             // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // Requête SQL pour récupérer les statistiques de transport
+            $sql = "SELECT type_transport, COUNT(*) as stats FROM transport 
+            NATURAL JOIN utilisateur
+            NATURAL JOIN entreprise
+            NATURAL JOIN trajet
+            where id_entreprise = :id_entreprise
+            GROUP BY type_transport;";
+
+            // Préparer et exécuter la requête
+            $query = $db->prepare($sql);
+            $query->bindValue(':id_entreprise', $id_entreprise, PDO::PARAM_INT);
+            $query->execute();
+
+            // Récupérer les résultats sous forme de tableau associatif
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // Retourner les statistiques des moyens de transport
+            return $result;
+        } catch (PDOException $e) {
+            // En cas d'erreur, afficher le message d'erreur et arrêter le script
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
 }

@@ -5,7 +5,6 @@ require_once '../config.php';
 require_once '../models/Entreprise.php';
 require_once "../models/Trajet.php";
 
-
 // Vérifier si le formulaire de déconnexion a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     // Détruire toutes les variables de session
@@ -23,6 +22,8 @@ if (!isset($_SESSION['user'])) {
     header('Location: controller-signin.php');
     exit(); // Assurez-vous de terminer le script après une redirection
 }
+
+$statstransports = Entreprise::getTransportStats($_SESSION['user']['id_entreprise']);
 
 // Inclure la page de vue HOME
 include_once '../views/view-home.php';
