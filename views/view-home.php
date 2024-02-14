@@ -41,11 +41,11 @@
                     <img src="<?= $photoPath ?>" class="responsive-img" alt="Photo de profil">
                 </div>
             </li>
-            <p class="profile-info-item, text-align: center">Nom : <?php echo $_SESSION['user']['nom_entreprise']; ?></p>
-            <p class="profile-info-item, text-align: center">Courriel : <?php echo $_SESSION['user']['mail_entreprise']; ?></p>
-            <p class="profile-info-item, text-align: center">Adresse : <?php echo $_SESSION['user']['adresse_entreprise']; ?></p>
-            <p class="profile-info-item, text-align: center">Adresse Postal : <?php echo $_SESSION['user']['postal_entreprise']; ?></p>
-            <p class="profile-info-item, text-align: center">Ville : <?php echo $_SESSION['user']['ville_entreprise']; ?></p>
+            <p class="profile-info-item, text-align: center"><b>Nom :</b> <?php echo $_SESSION['user']['nom_entreprise']; ?></p>
+            <p class="profile-info-item, text-align: center"><b>Courriel :</b> <?php echo $_SESSION['user']['mail_entreprise']; ?></p>
+            <p class="profile-info-item, text-align: center"><b>Adresse :</b> <?php echo $_SESSION['user']['adresse_entreprise']; ?></p>
+            <p class="profile-info-item, text-align: center"><b>Adresse Postal :</b> <?php echo $_SESSION['user']['postal_entreprise']; ?></p>
+            <p class="profile-info-item, text-align: center"><b>Ville :</b> <?php echo $_SESSION['user']['ville_entreprise']; ?></p>
             <!-- Ajouter le formulaire de déconnexion -->
             <form method="post" style="display:inline;">
                 <input type="hidden" name="logout" value="1">
@@ -117,7 +117,7 @@
                             if (!empty($fiveTrajets)) {
                                 // Afficher les trajets
                                 foreach ($fiveTrajets as $trajet) {
-                                    echo "<p><strong>Date :</strong> {$trajet['date_trajet']}</p>";
+                                    echo "<p><strong>Date :</strong> {$trajet['date_fr']}</p>";
                                     echo "<p><strong>Pseudo :</strong> {$trajet['pseudo_participant']}</p>";
                                     echo "<p><strong>Type :</strong> {$trajet['type_transport']}</p>";
                                     echo "<p><strong>Distance :</strong> {$trajet['distance_trajet']} km</p>";

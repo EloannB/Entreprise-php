@@ -377,7 +377,7 @@ class Entreprise
             $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
 
             // stockage de ma requete dans une variable
-            $sql = "SELECT trajet.date_trajet, utilisateur.pseudo_participant, transport.type_transport, trajet.distance_trajet, trajet.temps_trajet
+            $sql = "SELECT DATE_FORMAT(trajet.date_trajet, '%d/%m/%Y') AS date_fr, utilisateur.pseudo_participant, transport.type_transport, trajet.distance_trajet, trajet.temps_trajet
             FROM trajet
             JOIN utilisateur ON trajet.id_utilisateur = utilisateur.id_utilisateur
             JOIN transport ON trajet.id_transport = transport.id_transport
