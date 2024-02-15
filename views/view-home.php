@@ -68,18 +68,20 @@
                             <span class="card-title">Total des Utilisateurs :</span>
                             <?php
                             // Appeler la fonction pour récupérer les utilisateurs
-                            $utilisateurs = Entreprise::getAllUtilisateur($_SESSION['user']['id_entreprise']);
+                            $utilisateurs_json = Entreprise::getAllUtilisateur($_SESSION['user']['id_entreprise']);
+                            $utilisateurs = json_decode($utilisateurs_json, true); // true pour obtenir un tableau associatif
 
                             // Vérifier si des utilisateurs ont été récupérés
                             if (!empty($utilisateurs)) {
                                 // Afficher les utilisateurs
                                 foreach ($utilisateurs as $utilisateur) {
-                                    echo "<p>{$utilisateur['Total']} Utilsateur(s)</p>";
+                                    echo "<p>{$utilisateur['Total']} Utilisateur(s)</p>";
                                 }
                             } else {
                                 echo "<p>Aucun utilisateur trouvé.</p>";
                             }
                             ?>
+
                         </div>
                     </div>
                 </div>
@@ -236,14 +238,14 @@
                 }]
             },
             options: {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: 'white' // Changer la couleur de la légende
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white' // Changer la couleur de la légende
+                        }
                     }
                 }
             }
-        }
 
         });
 

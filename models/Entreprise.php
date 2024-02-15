@@ -226,37 +226,38 @@ class Entreprise
     }
 
     /**
-     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
-     * 
-     * @return array Tableau associatif contenant les infos des utilisateurs
-     */
-    public static function getAllUtilisateur(int $id_entreprise): array
-    {
-        try {
-            // Création d'un objet $db selon la classe PDO
-            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+ * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+ * 
+ * @return string JSON contenant le nombre total d'utilisateurs
+ */
+public static function getAllUtilisateur(int $id_entreprise): string
+{
+    try {
+        // Création d'un objet $db selon la classe PDO
+        $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
 
-            // stockage de ma requete dans une variable
-            $sql = "SELECT COUNT(*) AS Total FROM `utilisateur` WHERE `id_entreprise` = :id_entreprise";
+        // stockage de ma requete dans une variable
+        $sql = "SELECT COUNT(*) AS Total FROM `utilisateur` WHERE `id_entreprise` = :id_entreprise";
 
-            // je prepare ma requête pour éviter les injections SQL
-            $query = $db->prepare($sql);
+        // je prepare ma requête pour éviter les injections SQL
+        $query = $db->prepare($sql);
 
-            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+        $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
 
-            // on execute la requête
-            $query->execute();
+        // on execute la requête
+        $query->execute();
 
-            // on récupère le résultat de la requête dans une variable
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        // on récupère le résultat de la requête dans une variable
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            // on retourne le résultat
-            return $result;
-        } catch (PDOException $e) {
-            echo 'Erreur : ' . $e->getMessage();
-            die();
-        }
+        // Convertir le tableau en JSON
+        return json_encode($result);
+    } catch (PDOException $e) {
+        // En cas d'erreur, afficher le message d'erreur
+        return json_encode(array("error" => $e->getMessage()));
     }
+}
+
 
     /**
      * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
