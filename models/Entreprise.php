@@ -226,45 +226,45 @@ class Entreprise
     }
 
     /**
- * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
- * 
- * @return string JSON contenant le nombre total d'utilisateurs
- */
-public static function getAllUtilisateur(int $id_entreprise): string
-{
-    try {
-        // Création d'un objet $db selon la classe PDO
-        $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * 
+     * @return string JSON contenant le nombre total d'utilisateurs
+     */
+    public static function getAllUtilisateur(int $id_entreprise): string
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
 
-        // stockage de ma requete dans une variable
-        $sql = "SELECT COUNT(*) AS Total FROM `utilisateur` WHERE `id_entreprise` = :id_entreprise";
+            // stockage de ma requete dans une variable
+            $sql = "SELECT COUNT(*) AS Total FROM `utilisateur` WHERE `id_entreprise` = :id_entreprise";
 
-        // je prepare ma requête pour éviter les injections SQL
-        $query = $db->prepare($sql);
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql);
 
-        $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
 
-        // on execute la requête
-        $query->execute();
+            // on execute la requête
+            $query->execute();
 
-        // on récupère le résultat de la requête dans une variable
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        // Convertir le tableau en JSON
-        return json_encode($result);
-    } catch (PDOException $e) {
-        // En cas d'erreur, afficher le message d'erreur
-        return json_encode(array("error" => $e->getMessage()));
+            // Convertir le tableau en JSON
+            return json_encode($result);
+        } catch (PDOException $e) {
+            // En cas d'erreur, afficher le message d'erreur
+            return json_encode(array("error" => $e->getMessage()));
+        }
     }
-}
 
 
     /**
-     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * Méthode permettant de récupérer le nombre total d'utilisateurs actifs selon l'ID de l'entreprise
      * 
-     * @return array Tableau associatif contenant les infos des utilisateurs
+     * @return string JSON contenant le nombre total d'utilisateurs actifs
      */
-    public static function getAllActif(int $id_entreprise): array
+    public static function getAllActif(int $id_entreprise): string
     {
         try {
             // Création d'un objet $db selon la classe PDO
@@ -288,20 +288,19 @@ public static function getAllUtilisateur(int $id_entreprise): string
             // on récupère le résultat de la requête dans une variable
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            // on retourne le résultat
-            return $result;
+            // Convertir le tableau en JSON
+            return json_encode($result);
         } catch (PDOException $e) {
-            echo 'Erreur : ' . $e->getMessage();
-            die();
+            return json_encode(array("error" => $e->getMessage()));
         }
     }
 
     /**
-     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * Méthode permettant de récupérer tous les trajets selon l'ID de l'entreprise
      * 
-     * @return array Tableau associatif contenant les infos des utilisateurs
+     * @return string JSON contenant le nombre total de trajets
      */
-    public static function getAllTrajet(int $id_entreprise): array
+    public static function getAllTrajet(int $id_entreprise): string
     {
         try {
             // Création d'un objet $db selon la classe PDO
@@ -325,11 +324,10 @@ public static function getAllUtilisateur(int $id_entreprise): string
             // on récupère le résultat de la requête dans une variable
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            // on retourne le résultat
-            return $result;
+            // Convertir le tableau en JSON
+            return json_encode($result);
         } catch (PDOException $e) {
-            echo 'Erreur : ' . $e->getMessage();
-            die();
+            return json_encode(array("error" => $e->getMessage()));
         }
     }
 
@@ -367,11 +365,11 @@ public static function getAllUtilisateur(int $id_entreprise): string
     }
 
     /**
-     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * Méthode permettant de récupérer les cinq derniers trajets selon l'ID de l'entreprise
      * 
-     * @return array Tableau associatif contenant les infos des utilisateurs
+     * @return string JSON contenant les informations des cinq derniers trajets
      */
-    public static function getFiveLastTrajet(int $id_entreprise): array
+    public static function getFiveLastTrajet(int $id_entreprise): string
     {
         try {
             // Création d'un objet $db selon la classe PDO
@@ -397,11 +395,10 @@ public static function getAllUtilisateur(int $id_entreprise): string
             // on récupère le résultat de la requête dans une variable
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            // on retourne le résultat
-            return $result;
+            // Convertir le tableau en JSON
+            return json_encode($result);
         } catch (PDOException $e) {
-            echo 'Erreur : ' . $e->getMessage();
-            die();
+            return json_encode(array("error" => $e->getMessage()));
         }
     }
 
@@ -415,7 +412,7 @@ public static function getAllUtilisateur(int $id_entreprise): string
     public static function getTransportStats(int $id_entreprise): array
     {
         try {
-             // Création d'un objet $db selon la classe PDO
+            // Création d'un objet $db selon la classe PDO
             $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
 
             // Requête SQL pour récupérer les statistiques de transport

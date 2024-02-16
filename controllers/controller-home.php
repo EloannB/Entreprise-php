@@ -23,6 +23,22 @@ if (!isset($_SESSION['user'])) {
     exit(); // Assurez-vous de terminer le script après une redirection
 }
 
+// Appeler la fonction pour récupérer les utilisateurs
+$utilisateurs_json = Entreprise::getAllUtilisateur($_SESSION['user']['id_entreprise']);
+$utilisateurs = json_decode($utilisateurs_json, true); // true pour obtenir un tableau associatif
+
+// Appeler la fonction pour récupérer les utilisateurs actifs
+$Totalutilisateurs_json = Entreprise::getAllActif($_SESSION['user']['id_entreprise']);
+$Totalutilisateurs = json_decode($Totalutilisateurs_json, true); // true pour obtenir un tableau associatif
+
+// Appeler la fonction pour récupérer tous les trajets
+$totalTrajets_json = Entreprise::getAllTrajet($_SESSION['user']['id_entreprise']);
+$totalTrajets = json_decode($totalTrajets_json, true); // true pour obtenir un tableau associatif
+
+// Appeler la fonction pour récupérer les cinq derniers trajets
+$lastFiveTrajets_json = Entreprise::getFiveLastTrajet($_SESSION['user']['id_entreprise']);
+$lastFiveTrajets = json_decode($lastFiveTrajets_json, true); // true pour obtenir un tableau associatif
+
 $statstransports = Entreprise::getTransportStats($_SESSION['user']['id_entreprise']);
 
 // Inclure la page de vue HOME

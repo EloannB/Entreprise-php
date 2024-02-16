@@ -67,10 +67,6 @@
                         <div class="card-content white-text">
                             <span class="card-title">Total des Utilisateurs :</span>
                             <?php
-                            // Appeler la fonction pour récupérer les utilisateurs
-                            $utilisateurs_json = Entreprise::getAllUtilisateur($_SESSION['user']['id_entreprise']);
-                            $utilisateurs = json_decode($utilisateurs_json, true); // true pour obtenir un tableau associatif
-
                             // Vérifier si des utilisateurs ont été récupérés
                             if (!empty($utilisateurs)) {
                                 // Afficher les utilisateurs
@@ -91,19 +87,17 @@
                         <div class="card-content white-text">
                             <span class="card-title">Total des Utilisateurs Actifs :</span>
                             <?php
-                            // Appeler la fonction pour récupérer les utilisateurs
-                            $Totalutilisateurs = Entreprise::getAllActif($_SESSION['user']['id_entreprise']);
-
                             // Vérifier si des utilisateurs ont été récupérés
                             if (!empty($Totalutilisateurs)) {
                                 // Afficher les utilisateurs
-                                foreach ($Totalutilisateurs as $Totalutilisateurs) {
-                                    echo "<p>{$Totalutilisateurs['TotalActif']} Utilsateur(s)</p>";
+                                foreach ($Totalutilisateurs as $utilisateur) {
+                                    echo "<p>{$utilisateur['TotalActif']} Utilisateur(s)</p>";
                                 }
                             } else {
                                 echo "<p>Aucun utilisateur trouvé.</p>";
                             }
                             ?>
+
                         </div>
                     </div>
                 </div>
@@ -112,13 +106,10 @@
                         <div class="card-content white-text">
                             <span class="card-title">Les 5 derniers trajets :</span>
                             <?php
-                            // Appeler la fonction pour récupérer les trajets
-                            $fiveTrajets = Entreprise::getFiveLastTrajet($_SESSION['user']['id_entreprise']);
-
                             // Vérifier si des trajets ont été récupérés
-                            if (!empty($fiveTrajets)) {
+                            if (!empty($lastFiveTrajets)) {
                                 // Afficher les trajets
-                                foreach ($fiveTrajets as $trajet) {
+                                foreach ($lastFiveTrajets as $trajet) {
                                     echo "<p><strong>Date :</strong> {$trajet['date_fr']}</p>";
                                     echo "<p><strong>Pseudo :</strong> {$trajet['pseudo_participant']}</p>";
                                     echo "<p><strong>Type :</strong> {$trajet['type_transport']}</p>";
@@ -138,19 +129,16 @@
                         <div class="card-content white-text">
                             <span class="card-title">Total des Trajets :</span>
                             <?php
-                            // Appeler la fonction pour récupérer les trajets
-                            $Totaltrajets = Entreprise::getAllTrajet($_SESSION['user']['id_entreprise']);
-
                             // Vérifier si des trajets ont été récupérés
-                            if (!empty($Totaltrajets)) {
+                            if (!empty($totalTrajets)) {
                                 // Afficher les trajets
-                                foreach ($Totaltrajets as $Totaltrajets) {
-                                    echo "<p>{$Totaltrajets['TotalTrajet']} Trajet(s)</p>";
-                                }
+                                foreach ($totalTrajets as $totalTrajet)
+                                    echo "<p>Total de trajets : {$totalTrajet['TotalTrajet']}</p>";
                             } else {
-                                echo "<p>Aucun utilisateur trouvé.</p>";
+                                echo "<p>Aucun trajet trouvé.</p>";
                             }
                             ?>
+
                         </div>
                     </div>
                 </div>
