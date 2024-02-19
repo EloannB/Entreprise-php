@@ -36,7 +36,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10vh;
 }
 
 span.error {
@@ -45,4 +44,8 @@ span.error {
 
 p.error {
     color: red;
+}
+
+.switches {
+   color: #26a69a; 
 }

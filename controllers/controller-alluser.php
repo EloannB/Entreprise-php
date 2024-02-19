@@ -46,5 +46,8 @@ $fiveUtilisateur = json_decode($fiveUtilisateur_json, true); // true pour obteni
 // Appeler la fonction pour récupéer les stats des trajets
 $statstransports = Entreprise::getTransportStats($_SESSION['user']['id_entreprise']);
 
-// Inclure la page de vue HOME
-include_once '../views/view-home.php';
+// Appeler la fonction pour récupérer tout les utilisateurs
+$allUtilisateur_json = Entreprise::getAllUser($_SESSION['user']['id_entreprise']);
+$allUtilisateur = json_decode($allUtilisateur_json, true); // true pour obtenir un tableau associatif
+
+include_once '../views/view-alluser.php';

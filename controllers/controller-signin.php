@@ -40,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mot_de_passe = htmlspecialchars($_POST['mot_de_passe']);
 
         if (Entreprise::checkMailExists($courriel)) {
-            $entrepriseInfos = entreprise::getInfos($courriel);
+            $entrepriseInfos_json = entreprise::getInfos($courriel);
+            $entrepriseInfos  = json_decode($entrepriseInfos_json, true); // true retourne un tableau associatif 
 
             // On vérifie le mot de passe
             if (password_verify($mot_de_passe, $entrepriseInfos['mdp_entreprise'])) {

@@ -50,6 +50,9 @@
             <form method="post" style="display:inline;">
                 <input type="hidden" name="logout" value="1">
                 <div class="center-align">
+                    <a href="controller-alluser.php" class="btn logout-button">Voir utilisateurs</a>
+                </div>
+                <div class="center-align">
                     <button type="submit" class="btn logout-button">Déconnexion</button>
                 </div>
             </form>
@@ -133,7 +136,7 @@
                             if (!empty($totalTrajets)) {
                                 // Afficher les trajets
                                 foreach ($totalTrajets as $totalTrajet)
-                                    echo "<p>Total de trajets : {$totalTrajet['TotalTrajet']}</p>";
+                                    echo "<p>{$totalTrajet['TotalTrajet']} Trajet(s)</p>";
                             } else {
                                 echo "<p>Aucun trajet trouvé.</p>";
                             }
@@ -147,9 +150,6 @@
                         <div class="card-content white-text">
                             <span class="card-title">Les 5 derniers utilisateurs :</span>
                             <?php
-                            // Appeler la fonction pour récupérer les utilisateurs
-                            $fiveUtilisateur = Entreprise::getFiveLastUtilisateur($_SESSION['user']['id_entreprise']);
-
                             // Vérifier si des utilisateurs ont été récupérés
                             if (!empty($fiveUtilisateur)) {
                                 // Afficher les utilisateurs
@@ -172,7 +172,7 @@
                 <div class="col s12 m6">
                     <div class="card blue-grey darken-1">
                         <div class="card-content white-text">
-                            <span class="card-title">Stats moyens de transports</span>
+                            <span class="card-title">Stats moyens de transports :</span>
                             <canvas id="doughnutChart" width="400" height="400"></canvas>
                         </div>
                     </div>

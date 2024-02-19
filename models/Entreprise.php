@@ -133,11 +133,9 @@ class Entreprise
     /**
      * Methode permettant de récupérer les infos d'un utilisateur avec son mail comme paramètre
      * 
-     * @param string $email Adresse mail de l'utilisateur
-     * 
-     * @return array Tableau associatif contenant les infos de l'utilisateur
+     * @return string JSON contenant les infos d'un utilisateur
      */
-    public static function getInfos(string $courriel): array
+    public static function getInfos(string $courriel): string
     {
         try {
             // Création d'un objet $db selon la classe PDO
@@ -158,11 +156,11 @@ class Entreprise
             // on récupère le résultat de la requête dans une variable
             $result = $query->fetch(PDO::FETCH_ASSOC);
 
-            // on retourne le résultat
-            return $result;
+            // Convertir le tableau en JSON
+            return json_encode($result);
         } catch (PDOException $e) {
-            echo 'Erreur : ' . $e->getMessage();
-            die();
+            // En cas d'erreur, afficher le message d'erreur
+            return json_encode(array("error" => $e->getMessage()));
         }
     }
 
@@ -332,11 +330,11 @@ class Entreprise
     }
 
     /**
-     * Methode permettant de récupérer tout les utilisateurs selon l'id d'entreprise
+     * Méthode permettant de récupérer les 5 derniers utilisateurs selon l'ID de l'entreprise
      * 
-     * @return array Tableau associatif contenant les infos des utilisateurs
+     * @return string JSON contenant les 5 derniers utilisateurs
      */
-    public static function getFiveLastUtilisateur(int $id_entreprise): array
+    public static function getFiveLastUtilisateur(int $id_entreprise): string
     {
         try {
             // Création d'un objet $db selon la classe PDO
@@ -356,11 +354,10 @@ class Entreprise
             // on récupère le résultat de la requête dans une variable
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            // on retourne le résultat
-            return $result;
+            // Convertir le tableau en JSON
+            return json_encode($result);
         } catch (PDOException $e) {
-            echo 'Erreur : ' . $e->getMessage();
-            die();
+            return json_encode(array("error" => $e->getMessage()));
         }
     }
 
@@ -437,6 +434,70 @@ class Entreprise
             // En cas d'erreur, afficher le message d'erreur et arrêter le script
             echo 'Erreur : ' . $e->getMessage();
             die();
+        }
+    }
+
+    /**
+     * Méthode permettant de récupérer les 5 derniers utilisateurs selon l'ID de l'entreprise
+     * 
+     * @return string JSON contenant les 5 derniers utilisateurs
+     */
+    public static function getAllUser(int $id_entreprise): string
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT id_utilisateur, photo_participant, pseudo_participant, mail_participant FROM `utilisateur` WHERE id_entreprise = :id_entreprise ORDER BY id_utilisateur;";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql);
+
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // Convertir le tableau en JSON
+            return json_encode($result);
+        } catch (PDOException $e) {
+            return json_encode(array("error" => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Méthode permettant de desactiver ou d'activer un utilisateur selon l'ID de l'entreprise
+     * 
+     * @return string JSON contenant l'activation ou la desactivation d'un utilisateur
+     */
+    public static function getStateUser(int $id_entreprise): string
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT valide_participant FROM utilisateur NATURAL JOIN entreprise WHERE id_entreprise = :id_entreprise;";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql);
+
+            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // Convertir le tableau en JSON
+            return json_encode($result);
+        } catch (PDOException $e) {
+            return json_encode(array("error" => $e->getMessage()));
         }
     }
 }
