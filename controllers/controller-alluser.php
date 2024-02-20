@@ -45,9 +45,18 @@ $fiveUtilisateur = json_decode($fiveUtilisateur_json, true); // true pour obteni
 
 // Appeler la fonction pour récupéer les stats des trajets
 $statstransports = Entreprise::getTransportStats($_SESSION['user']['id_entreprise']);
+// Appeler la fonction pour activer les utilisateurs
+$valideUser_json = Entreprise::validateUser($_SESSION['user']['id_entreprise']);
+$valideUser = json_decode($valideUser_json, true); // true pour obtenir un tableau associatif
+
+// Appeler la fonction pour desactiver les utilisateurs
+$desactivUser_json = Entreprise::desactivUser($_SESSION['user']['id_entreprise']);
+$desactivUser = json_decode($desactivUser_json, true); // true pour obtenir un tableau associatif
 
 // Appeler la fonction pour récupérer tout les utilisateurs
 $allUtilisateur_json = Entreprise::getAllUser($_SESSION['user']['id_entreprise']);
 $allUtilisateur = json_decode($allUtilisateur_json, true); // true pour obtenir un tableau associatif
+
+
 
 include_once '../views/view-alluser.php';

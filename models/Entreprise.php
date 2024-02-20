@@ -449,7 +449,7 @@ class Entreprise
             $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
 
             // stockage de ma requete dans une variable
-            $sql = "SELECT id_utilisateur, photo_participant, pseudo_participant, mail_participant FROM `utilisateur` WHERE id_entreprise = :id_entreprise ORDER BY id_utilisateur;";
+            $sql = "SELECT * FROM `utilisateur` WHERE id_entreprise = :id_entreprise ORDER BY id_utilisateur;";
 
             // je prepare ma requête pour éviter les injections SQL
             $query = $db->prepare($sql);
@@ -470,23 +470,55 @@ class Entreprise
     }
 
     /**
-     * Méthode permettant de desactiver ou d'activer un utilisateur selon l'ID de l'entreprise
+     * Méthode permettant d'activer un utilisateur
      * 
-     * @return string JSON contenant l'activation ou la desactivation d'un utilisateur
+     * @return string JSON contenant l'activation d'un utilisateur
      */
-    public static function getStateUser(int $id_entreprise): string
+    public static function validateUser(int $id_utilisateur): string
     {
         try {
             // Création d'un objet $db selon la classe PDO
             $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
 
             // stockage de ma requete dans une variable
-            $sql = "SELECT valide_participant FROM utilisateur NATURAL JOIN entreprise WHERE id_entreprise = :id_entreprise;";
+            $sql = "UPDATE utilisateur SET valide_participant = 1 WHERE id_utilisateur = :id_utilisateur;";
 
             // je prepare ma requête pour éviter les injections SQL
             $query = $db->prepare($sql);
 
-            $query->bindParam(":id_entreprise", $id_entreprise, PDO::PARAM_INT);
+            $query->bindParam(":id_utilisateur", $id_utilisateur, PDO::PARAM_INT);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            // Convertir le tableau en JSON
+            return json_encode($result);
+        } catch (PDOException $e) {
+            return json_encode(array("error" => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Méthode permettant de desactiver un utilisateur
+     * 
+     * @return string JSON contenant la desactivation d'un utilisateur
+     */
+    public static function desactivUser(int $id_utilisateur): string
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "UPDATE utilisateur SET valide_participant = 0 WHERE id_utilisateur = :id_utilisateur;";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql);
+
+            $query->bindParam(":id_utilisateur", $id_utilisateur, PDO::PARAM_INT);
 
             // on execute la requête
             $query->execute();

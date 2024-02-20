@@ -69,27 +69,32 @@
                         if (!empty($allUtilisateur)) {
                             // Afficher les utilisateurs
                             foreach ($allUtilisateur as $utilisateur) {
-                                echo "<div style='display: flex; align-items: center;'>";
-                                // Condition pour afficher la photo de l'utilisateur actuel ou une image par défaut
-                                $utilisateurPhotoPath = !empty($utilisateur['photo_participant']) ? "http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}" : "../imageDefaut.png";
-                                echo "<img src='$utilisateurPhotoPath' alt='photo_participant' style='max-width: 30%; border-radius: 50%; margin-top: 10px; height: 80px; width: 80px; object-fit: cover;'>";
-                                echo "<p style='margin-left: 20px;'>{$utilisateur['pseudo_participant']}</p>";
-                                echo "<p style='margin-left: 5px;'>/ {$utilisateur['mail_participant']}</p>";
-                                echo '<div class="switch" style="margin-left: 20px;">';
-                                echo "<label class='switches'>";
-                                echo "Desactiver";
-                                echo '<input type="checkbox">';
-                                echo '<span class="lever"></span>';
-                                echo 'Activer';
-                                echo "</label>";
-                                echo "</div>";
-                                echo "</div>";
+                        ?>
+                                <div style='display: flex; align-items: center;'>
+                                    <?php
+                                    // Condition pour afficher la photo de l'utilisateur actuel ou une image par défaut
+                                    $utilisateurPhotoPath = !empty($utilisateur['photo_participant']) ? "http://formulaire-php.test/assets/uploads/{$utilisateur['photo_participant']}" : "../imageDefaut.png";
+                                    ?>
+                                    <img src='<?php echo $utilisateurPhotoPath; ?>' alt='photo_participant' style='max-width: 30%; border-radius: 50%; margin-top: 10px; height: 80px; width: 80px; object-fit: cover;'>
+                                    <p style='margin-left: 20px;'><?php echo $utilisateur['pseudo_participant']; ?></p>
+                                    <p style='margin-left: 5px;'>/ <?php echo $utilisateur['mail_participant']; ?></p>
+                                    <div class="switch" style="margin-left: 20px;">
+                                        <label class='switches'>
+                                            Desactiver
+                                            <?php $checked = $utilisateur['valide_participant'] == 1 ? 'checked' : ''; ?>
+                                            <input type="checkbox" data-user-id="<?= $utilisateur['id_utilisateur'] ?>" <?php echo $checked; ?>>
+                                            <span class="lever"></span>
+                                            Activer
+                                        </label>
+                                    </div>
+                                </div>
+                        <?php
                             }
                         } else {
                             echo "<p>Aucun utilisateur trouvé.</p>";
                         }
-
                         ?>
+
                     </div>
                 </div>
             </div>
@@ -104,6 +109,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems);
+        });
+
+        document.addEventListener('click', e => {
+            if (e.target.type == 'checkbox') {
+
+                if (e.target.checked == false) {
+                    fetch(`controller-ajax.php?invalidate=${e.target.dataset.userId}`)
+                } else {
+                    fetch(`controller-ajax.php?validate=${e.target.dataset.userId}`)
+                }
+            }
         });
     </script>
 </body>
