@@ -532,4 +532,40 @@ class Entreprise
             return json_encode(array("error" => $e->getMessage()));
         }
     }
+
+    /**
+     * Methode permettant de récupérer les infos d'un utilisateur avec son mail comme paramètre
+     * 
+     * @param string $email Adresse mail de l'utilisateur
+     * 
+     * @return array Tableau associatif contenant les infos de l'utilisateur
+     */
+    public static function getInfosUtilisateur(string $id_utilisateur): array
+    {
+        try {
+            // Création d'un objet $db selon la classe PDO
+            $db = new PDO("mysql:host=localhost;dbname=" . DBNAME, DBUSERNAME, DBPASSWORD);
+
+            // stockage de ma requete dans une variable
+            $sql = "SELECT * FROM `utilisateur` NATURAL JOIN `entreprise` WHERE `id_utilisateur` = :id_utilisateur";
+
+            // je prepare ma requête pour éviter les injections SQL
+            $query = $db->prepare($sql);
+
+            // on relie les paramètres à nos marqueurs nominatifs à l'aide d'un bindValue
+            $query->bindValue(':id_utilisateur', $id_utilisateur, PDO::PARAM_STR);
+
+            // on execute la requête
+            $query->execute();
+
+            // on récupère le résultat de la requête dans une variable
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+
+            // on retourne le résultat
+            return $result;
+        } catch (PDOException $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
 }
